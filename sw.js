@@ -1,4 +1,4 @@
-const CACHE_NAME = "kaufler-sav-pwa-v1-4-leave-workdays-sign";
+const CACHE_NAME = "kaufler-sav-pwa-v1-5-no-footer-save-in-page";
 
 const APP_SHELL = [
   "./",

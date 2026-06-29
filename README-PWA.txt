@@ -1,3 +1,5 @@
+Version V1.5 : suppression du footer fixe et ajout du bouton Enregistrer directement dans la page.
+
 KAUFLER — PORTAIL SAV PWA V1.4
 
 Contenu à déposer à la racine du dépôt GitHub Pages :
