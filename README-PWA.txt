@@ -1,4 +1,4 @@
-KAUFLER — PORTAIL SAV PWA V1.2
+KAUFLER — PORTAIL SAV PWA V1.4
 
 Contenu à déposer à la racine du dépôt GitHub Pages :
 - index.html
@@ -17,3 +17,8 @@ Si une version plus récente est détectée, une bannière “Mise à jour dispo
 Le technicien appuie sur “Mettre à jour” pour charger la nouvelle version.
 
 Important : les données saisies localement restent dans le navigateur/PWA. Le JSON de sauvegarde reste indispensable pour archivage.
+
+
+V1.4 :
+- calcul automatique des jours ouvrés dans les demandes de congé, du lundi au vendredi, hors jours fériés ;
+- bouton Signer pour activer/désactiver la zone tactile de signature.
