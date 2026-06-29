@@ -62,6 +62,7 @@
         <span class="chip">Congés <strong id="chipLeaves">0</strong></span>
         <span class="chip">Clients <strong id="chipClients">0</strong></span>
         <span class="chip">Affaires <strong id="chipAffaires">0</strong></span>
+        <span class="chip">Techniciens <strong id="chipTechnicians">0</strong></span>
         <span class="chip">Sauvé <strong id="chipSaved">—</strong></span>
       </div>
     </header>
@@ -77,10 +78,12 @@
 
     <datalist id="clientsList"></datalist>
     <datalist id="affairesList"></datalist>
+    <datalist id="techniciensList"></datalist>
 
     <section class="card tab-panel active" id="panel-profile">
       <div class="section-title"><span class="num">1</span><div><h2>Technicien et période</h2><p>Ces informations seront reprises dans les exports heures, frais et congés.</p></div></div>
       <div class="grid two">
+        <label class="field"><div class="label-row"><span>Technicien</span><span class="hint">liste modifiable</span></div><input id="technicien" data-profile="technicien" list="techniciensList" placeholder="Ex : DUPONT;Jean;jean.dupont@exemple.fr"></label>
         <label class="field"><div class="label-row"><span>Nom</span></div><input id="nom" data-profile="nom" autocomplete="family-name"></label>
         <label class="field"><div class="label-row"><span>Prénom</span></div><input id="prenom" data-profile="prenom" autocomplete="given-name"></label>
         <label class="field"><div class="label-row"><span>Email technicien</span></div><input id="email" data-profile="email" type="email" autocomplete="email"></label>
@@ -122,9 +125,10 @@
     </section>
 
     <section class="card tab-panel" id="panel-refs">
-      <div class="section-title"><span class="num">5</span><div><h2>Listes de saisie</h2><p>Ces listes alimentent les menus activité, client et N° affaire sur mobile.</p></div></div>
-      <div class="notice small"><b>Important</b>Pour client et affaire, saisis une valeur par ligne. Les techniciens pourront quand même taper une valeur non présente dans la liste.</div>
+      <div class="section-title"><span class="num">5</span><div><h2>Listes de saisie</h2><p>Ces listes alimentent les menus technicien, activité, client et N° affaire sur mobile.</p></div></div>
+      <div class="notice small"><b>Important</b>Saisis une valeur par ligne. Pour les techniciens, utilise de préférence le format <b>NOM;Prénom;email</b>. La saisie libre reste possible.</div>
       <div class="grid">
+        <label class="field"><div class="label-row"><span>Liste des techniciens</span><span class="hint">format conseillé : NOM;Prénom;email</span></div><textarea id="techniciansText" data-ref="technicians" placeholder="Ex : DUPONT;Jean;jean.dupont@entreprise.fr&#10;MARTIN;Claire;claire.martin@entreprise.fr"></textarea></label>
         <label class="field"><div class="label-row"><span>Liste des activités</span><span class="hint">une par ligne</span></div><textarea id="activitiesText" data-ref="activities"></textarea></label>
         <label class="field"><div class="label-row"><span>Liste des clients</span><span class="hint">une par ligne</span></div><textarea id="clientsText" data-ref="clients" placeholder="Ex : Client A&#10;Client B"></textarea></label>
         <label class="field"><div class="label-row"><span>Liste des N° affaires</span><span class="hint">une par ligne</span></div><textarea id="affairesText" data-ref="affaires" placeholder="Ex : 240123&#10;240124"></textarea></label>
@@ -199,13 +203,13 @@
   function isoWeek(d){ const date=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const dayNum=date.getUTCDay()||7; date.setUTCDate(date.getUTCDate()+4-dayNum); const yearStart=new Date(Date.UTC(date.getUTCFullYear(),0,1)); return Math.ceil((((date-yearStart)/86400000)+1)/7); }
   function mondayOfWeek(d=new Date()){ const x=new Date(d); const day=x.getDay()||7; x.setDate(x.getDate()-day+1); return x.toISOString().slice(0,10); }
   function sundayOfWeek(d=new Date()){ const x=new Date(mondayOfWeek(d)); x.setDate(x.getDate()+6); return x.toISOString().slice(0,10); }
-  function defaultState(){ return {profile:{nom:'',prenom:'',email:'',semaine:String(isoWeek(new Date())),periodeDu:mondayOfWeek(),periodeAu:sundayOfWeek(),mailTo:'',message:''},refs:{activities:[...DEFAULT_ACTIVITIES],clients:[],affaires:[]},hours:[],expenses:[],leaves:[],signature:null,updatedAt:null}; }
+  function defaultState(){ return {profile:{technicien:'',nom:'',prenom:'',email:'',semaine:String(isoWeek(new Date())),periodeDu:mondayOfWeek(),periodeAu:sundayOfWeek(),mailTo:'',message:''},refs:{technicians:[],activities:[...DEFAULT_ACTIVITIES],clients:[],affaires:[]},hours:[],expenses:[],leaves:[],signature:null,updatedAt:null}; }
   function cleanList(list){ return Array.from(new Set(String(list || '').split(/\r?\n/).map(x=>x.trim()).filter(Boolean))); }
   function normalizeArray(v){ return Array.isArray(v) ? v.map(x=>String(x||'').trim()).filter(Boolean) : cleanList(v); }
   function migrate(raw){
     const d=defaultState(); const s=raw && typeof raw==='object' ? raw : {};
     s.profile = {...d.profile, ...(s.profile||{})};
-    s.refs = {activities: normalizeArray(s.refs && s.refs.activities).length?normalizeArray(s.refs.activities):[...DEFAULT_ACTIVITIES], clients: normalizeArray(s.refs && s.refs.clients), affaires: normalizeArray(s.refs && s.refs.affaires)};
+    s.refs = {technicians: normalizeArray(s.refs && s.refs.technicians), activities: normalizeArray(s.refs && s.refs.activities).length?normalizeArray(s.refs.activities):[...DEFAULT_ACTIVITIES], clients: normalizeArray(s.refs && s.refs.clients), affaires: normalizeArray(s.refs && s.refs.affaires)};
     s.hours = Array.isArray(s.hours)?s.hours.map(h=>({id:h.id||uid(),date:h.date||today(),client:h.client||'',affaire:h.affaire||'',activity:h.activity||DEFAULT_ACTIVITIES[3],hours:h.hours||'',comment:h.comment||''})):[];
     s.expenses = Array.isArray(s.expenses)?s.expenses.map(e=>({id:e.id||uid(),date:e.date||today(),type:e.type||'Restaurant',client:e.client||e.clientAffaire||'',affaire:e.affaire||'',ttc:e.ttc||'',tva:e.tva||'',comment:e.comment||''})):[];
     s.leaves = Array.isArray(s.leaves)?s.leaves.map(l=>({id:l.id||uid(),type:l.type||'Congés payés',from:l.from||'',to:l.to||'',days:l.days||'',remaining:l.remaining||'',soldeCp:l.soldeCp||'',comment:l.comment||'',other:l.other||''})):[];
@@ -237,12 +241,40 @@
     $('shareAll').onclick=shareAll;
     $('resetAll').onclick=resetAll;
     qsa('[data-profile]').forEach(el=>el.addEventListener('input',()=>{ state.profile[el.dataset.profile]=el.value; scheduleSave(); }));
+    $('technicien').addEventListener('change',()=>{ collectProfile(); applyTechnicianSelection(); saveNow(false); });
+    $('technicien').addEventListener('blur',()=>{ collectProfile(); applyTechnicianSelection(); saveNow(false); });
   }
   function applyProfile(){ Object.entries(state.profile||{}).forEach(([k,v])=>{ if($(k)) $(k).value=v||''; }); }
   function collectProfile(){ qsa('[data-profile]').forEach(el=>{ state.profile[el.dataset.profile]=el.value; }); }
-  function applyRefs(){ $('activitiesText').value=(state.refs.activities||[]).join('\n'); $('clientsText').value=(state.refs.clients||[]).join('\n'); $('affairesText').value=(state.refs.affaires||[]).join('\n'); renderDatalists(); }
-  function collectRefs(){ state.refs.activities=cleanList($('activitiesText').value); if(!state.refs.activities.length) state.refs.activities=[...DEFAULT_ACTIVITIES]; state.refs.clients=cleanList($('clientsText').value); state.refs.affaires=cleanList($('affairesText').value); }
-  function renderDatalists(){ $('clientsList').innerHTML=(state.refs.clients||[]).map(x=>`<option value="${safe(x)}"></option>`).join(''); $('affairesList').innerHTML=(state.refs.affaires||[]).map(x=>`<option value="${safe(x)}"></option>`).join(''); }
+  function applyRefs(){ $('techniciansText').value=(state.refs.technicians||[]).join('\n'); $('activitiesText').value=(state.refs.activities||[]).join('\n'); $('clientsText').value=(state.refs.clients||[]).join('\n'); $('affairesText').value=(state.refs.affaires||[]).join('\n'); renderDatalists(); }
+  function collectRefs(){ state.refs.technicians=cleanList($('techniciansText').value); state.refs.activities=cleanList($('activitiesText').value); if(!state.refs.activities.length) state.refs.activities=[...DEFAULT_ACTIVITIES]; state.refs.clients=cleanList($('clientsText').value); state.refs.affaires=cleanList($('affairesText').value); }
+  function renderDatalists(){ $('clientsList').innerHTML=(state.refs.clients||[]).map(x=>`<option value="${safe(x)}"></option>`).join(''); $('affairesList').innerHTML=(state.refs.affaires||[]).map(x=>`<option value="${safe(x)}"></option>`).join(''); $('techniciensList').innerHTML=(state.refs.technicians||[]).map(x=>`<option value="${safe(x)}"></option>`).join(''); }
+  
+  function parseTechnician(value){
+    const raw=String(value||'').trim();
+    if(!raw) return null;
+    let email='';
+    let main=raw;
+    const angle=raw.match(/<([^>]+@[^>]+)>/);
+    if(angle){ email=angle[1].trim(); main=raw.replace(angle[0],'').trim(); }
+    const sep=raw.includes(';') ? ';' : (raw.includes('|') ? '|' : null);
+    if(sep){
+      const parts=raw.split(sep).map(x=>x.trim()).filter(Boolean);
+      if(parts.length>=3) return {nom:parts[0], prenom:parts[1], email:parts[2]};
+      if(parts.length===2){ main=parts[0]; if(parts[1].includes('@')) email=parts[1]; }
+    }
+    const bits=main.split(/\s+/).filter(Boolean);
+    if(bits.length>=2) return {nom:bits[0], prenom:bits.slice(1).join(' '), email};
+    return {nom:main, prenom:'', email};
+  }
+  function applyTechnicianSelection(){
+    const parsed=parseTechnician(state.profile.technicien);
+    if(!parsed) return;
+    if(parsed.nom) state.profile.nom=parsed.nom;
+    if(parsed.prenom) state.profile.prenom=parsed.prenom;
+    if(parsed.email) state.profile.email=parsed.email;
+    ['nom','prenom','email'].forEach(k=>{ if($(k)) $(k).value=state.profile[k]||''; });
+  }
   function collectAll(){ collectProfile(); collectRefs(); renderDatalists(); collectHours(); collectExpenses(); collectLeaves(); }
   function renderAll(){ renderDatalists(); renderHours(); renderExpenses(); renderLeaves(); updateKpis(); }
   function optionList(list, current){ const set=new Set(list||[]); if(current && !set.has(current)) set.add(current); return Array.from(set).map(x=>`<option value="${safe(x)}" ${x===current?'selected':''}>${safe(x)}</option>`).join(''); }
@@ -288,16 +320,16 @@
     </article>`).join('');
     qsa('#leavesList [data-id]').forEach(card=>{ const id=card.dataset.id; qsa('[data-l]',card).forEach(el=>el.addEventListener('input',()=>{ const l=state.leaves.find(x=>x.id===id); if(l){ l[el.dataset.l]=el.value; scheduleSave(); updateKpis(); }})); card.querySelector('[data-del="leave"]').onclick=()=>{ state.leaves=state.leaves.filter(x=>x.id!==id); renderLeaves(); saveNow(false); }; }); updateKpis(); }
   function totals(){ return {hours:state.hours.reduce((s,x)=>s+hoursValue(x.hours),0), expenses:state.expenses.reduce((s,x)=>s+hoursValue(x.ttc),0), leaves:state.leaves.length}; }
-  function updateKpis(){ const t=totals(); $('kpiHours').textContent=hoursFmt(t.hours); $('kpiExpenses').textContent=euro(t.expenses); $('kpiLeaves').textContent=t.leaves; $('hoursTotalLine').textContent=hoursFmt(t.hours); $('expensesTotalLine').textContent=euro(t.expenses); $('chipHours').textContent=hoursFmt(t.hours); $('chipExpenses').textContent=euro(t.expenses); $('chipLeaves').textContent=t.leaves; $('chipClients').textContent=(state.refs.clients||[]).length; $('chipAffaires').textContent=(state.refs.affaires||[]).length; $('chipSaved').textContent=state.updatedAt?new Date(state.updatedAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'—'; }
+  function updateKpis(){ const t=totals(); $('kpiHours').textContent=hoursFmt(t.hours); $('kpiExpenses').textContent=euro(t.expenses); $('kpiLeaves').textContent=t.leaves; $('hoursTotalLine').textContent=hoursFmt(t.hours); $('expensesTotalLine').textContent=euro(t.expenses); $('chipHours').textContent=hoursFmt(t.hours); $('chipExpenses').textContent=euro(t.expenses); $('chipLeaves').textContent=t.leaves; $('chipClients').textContent=(state.refs.clients||[]).length; $('chipAffaires').textContent=(state.refs.affaires||[]).length; $('chipTechnicians').textContent=(state.refs.technicians||[]).length; $('chipSaved').textContent=state.updatedAt?new Date(state.updatedAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'—'; }
   function setupSignature(){ const canvas=$('signature'); const ctx=canvas.getContext('2d'); let drawing=false; function resize(){const ratio=Math.max(window.devicePixelRatio||1,1); const rect=canvas.getBoundingClientRect(); canvas.width=rect.width*ratio; canvas.height=220*ratio; ctx.setTransform(ratio,0,0,ratio,0,0); redrawSignature();} function pos(e){const r=canvas.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:p.clientX-r.left,y:p.clientY-r.top};} function start(e){drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault();} function move(e){if(!drawing)return; const p=pos(e); ctx.lineWidth=2.4; ctx.lineCap='round'; ctx.strokeStyle='#111827'; ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault();} function end(){if(!drawing)return; drawing=false; state.signature=canvas.toDataURL('image/png'); saveNow(false);} function redrawSignature(){ctx.clearRect(0,0,canvas.width,canvas.height); if(state.signature){const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0,canvas.clientWidth,canvas.clientHeight); img.src=state.signature;}} canvas.addEventListener('mousedown',start); canvas.addEventListener('mousemove',move); window.addEventListener('mouseup',end); canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchmove',move,{passive:false}); canvas.addEventListener('touchend',end); window.addEventListener('resize',resize); $('clearSignature').onclick=()=>{state.signature=null; ctx.clearRect(0,0,canvas.width,canvas.height); saveNow(false);}; setTimeout(resize,60); }
 
-  function exportData(){ collectAll(); return {version:'v1.1-mobile-export',exportedAt:new Date().toISOString(),profile:state.profile,refs:state.refs,hours:state.hours,expenses:state.expenses,leaves:state.leaves,signature:state.signature}; }
+  function exportData(){ collectAll(); return {version:'v1.2-mobile-export-techniciens',exportedAt:new Date().toISOString(),profile:state.profile,refs:state.refs,hours:state.hours,expenses:state.expenses,leaves:state.leaves,signature:state.signature}; }
   function filename(ext){ const p=state.profile||{}; const name=[p.nom,p.prenom].filter(Boolean).join('-') || 'technicien'; const sem=p.semaine || isoWeek(new Date()); const stamp=new Date().toISOString().slice(0,10); return `kaufler-portail-sav-${name}-S${sem}-${stamp}.${ext}`.replace(/[^a-zA-Z0-9_.-]+/g,'-'); }
   function dayLabel(date){ if(!date) return '—'; const d=new Date(date+'T00:00:00'); return `${DAY_NAMES[d.getDay()]} ${d.toLocaleDateString('fr-FR')}`; }
   function dailyTotals(){ const map={}; state.hours.forEach(h=>{ if(!h.date) return; map[h.date]=(map[h.date]||0)+hoursValue(h.hours); }); return Object.entries(map).sort(([a],[b])=>a.localeCompare(b)); }
   function reportHtml(){ const p=state.profile||{}; const t=totals(); return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Récapitulatif technicien SAV</title><style>
     body{font-family:Arial,sans-serif;color:#111827;margin:22px;background:#fff;font-size:13px}.head{display:flex;gap:16px;align-items:center;border-bottom:4px solid #be1e2d;padding-bottom:12px;margin-bottom:16px}.logo-shell{display:flex;align-items:center;justify-content:center;width:150px;height:62px;border:1px solid #ddd;border-radius:12px;padding:8px}.logo{max-width:100%;max-height:100%}h1{color:#071d36;margin:0;font-size:24px}h2{color:#be1e2d;margin:0 0 9px;font-size:18px}.meta{color:#667085;margin:4px 0 0}section{border:1px solid #ddd;border-radius:14px;padding:14px;margin:14px 0;break-inside:avoid}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:7px;text-align:left;vertical-align:top}th{background:#f3f4f6}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.k{border:1px solid #ddd;border-radius:12px;padding:10px}.k strong{display:block;font-size:20px}.sign-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid #111;margin-top:10px}.sign-box{min-height:92px;border-right:1px solid #111;padding:8px}.sign-box:last-child{border-right:0}.sig{max-width:300px;border:1px solid #ddd;border-radius:8px}.small{font-size:12px;color:#667085}.right{text-align:right}.page-break{break-before:page}@media print{body{margin:10mm}.no-print{display:none}.head{break-inside:avoid}section{box-shadow:none}.page-break{break-before:page}}</style></head><body>
-    <header class="head"><div class="logo-shell"><img class="logo" src="${LOGO_DATA_URI}" alt="Kaufler"></div><div><h1>Kaufler — Portail technicien SAV</h1><p class="meta">Rapport généré le ${new Date().toLocaleString('fr-FR')}</p><p class="meta">${safe(p.prenom)} ${safe(p.nom)} · Semaine ${safe(p.semaine)} · ${safe(p.periodeDu)} → ${safe(p.periodeAu)}</p></div></header>
+    <header class="head"><div class="logo-shell"><img class="logo" src="${LOGO_DATA_URI}" alt="Kaufler"></div><div><h1>Kaufler — Portail technicien SAV</h1><p class="meta">Rapport généré le ${new Date().toLocaleString('fr-FR')}</p><p class="meta">${safe(p.technicien || ((p.prenom||'')+' '+(p.nom||'')))} · Semaine ${safe(p.semaine)} · ${safe(p.periodeDu)} → ${safe(p.periodeAu)}</p></div></header>
     <section><h2>Synthèse</h2><div class="summary"><div class="k"><span>Total heures</span><strong>${hoursFmt(t.hours)}</strong></div><div class="k"><span>Total frais TTC</span><strong>${euro(t.expenses)}</strong></div><div class="k"><span>Demandes congé</span><strong>${t.leaves}</strong></div></div>${p.message?`<p>${br(p.message)}</p>`:''}</section>
     ${hoursReport()}${expensesReport()}${leavesReport()}${signatureReport()}
     </body></html>`; }
@@ -305,7 +337,7 @@
   function expensesReport(){ const rows=state.expenses.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')); const byType={}; rows.forEach(e=>{byType[e.type]=(byType[e.type]||0)+hoursValue(e.ttc);}); return `<section><h2>NOTE DE FRAIS</h2><table><tr><td>Nom</td><td>${safe(state.profile.nom)}</td><td>Prénom</td><td>${safe(state.profile.prenom)}</td></tr><tr><td>Semaine n°</td><td>${safe(state.profile.semaine)}</td><td>Période</td><td>${safe(state.profile.periodeDu)} → ${safe(state.profile.periodeAu)}</td></tr></table>${rows.length?`<table style="margin-top:10px"><tr><th>Date</th><th>Client</th><th>N° affaire</th><th>Type</th><th>Montant TTC</th><th>TVA</th><th>Observation</th></tr>${rows.map(e=>`<tr><td>${safe(dayLabel(e.date))}</td><td>${safe(e.client)}</td><td>${safe(e.affaire)}</td><td>${safe(e.type)}</td><td class="right">${euro(e.ttc)}</td><td class="right">${euro(e.tva)}</td><td>${br(e.comment)}</td></tr>`).join('')}<tr><th colspan="4">Total</th><th class="right">${euro(rows.reduce((s,e)=>s+hoursValue(e.ttc),0))}</th><th class="right">${euro(rows.reduce((s,e)=>s+hoursValue(e.tva),0))}</th><th></th></tr></table><h3>Totaux par type</h3><table><tr><th>Type</th><th>Total TTC</th></tr>${Object.entries(byType).sort().map(([k,v])=>`<tr><td>${safe(k)}</td><td class="right">${euro(v)}</td></tr>`).join('')}</table>`:'<p>Aucune dépense saisie.</p>'}</section>`; }
   function leavesReport(){ const rows=state.leaves; return `<section><h2>DEMANDE DE CONGÉS</h2>${rows.length?rows.map((l,i)=>`<div style="border:1px solid #999;padding:10px;margin:10px 0;break-inside:avoid"><h3>Demande ${i+1}</h3><table><tr><td>Nom</td><td>${safe(state.profile.nom)}</td><td>Prénom</td><td>${safe(state.profile.prenom)}</td></tr><tr><td>Semaine n°</td><td>${safe(state.profile.semaine)}</td><td>Nbre jours restant</td><td>${safe(l.remaining)}</td></tr><tr><td>Date absence : DU</td><td>${safe(l.from)}</td><td>Date absence : AU</td><td>${safe(l.to)}</td></tr><tr><td>Total jours</td><td>${safe(l.days)}</td><td>Solde CP</td><td>${safe(l.soldeCp)}</td></tr><tr><td>Type</td><td colspan="3">${safe(l.type)}${l.other?' — '+safe(l.other):''}</td></tr><tr><td>Commentaire</td><td colspan="3">${br(l.comment)}</td></tr></table><div class="sign-grid"><div class="sign-box"><b>Demandeur :</b><br>Le :<br>${state.signature?`<img class="sig" src="${state.signature}" alt="Signature">`:''}</div><div class="sign-box"><b>Responsable :</b><br>Le :<br><br>Accepté ☐<br>Refusé ☐</div><div class="sign-box"><b>Directeur :</b><br>Le :<br><br>Accepté ☐<br>Refusé ☐</div></div></div>`).join(''):'<p>Aucune demande de congé saisie.</p>'}</section>`; }
   function signatureReport(){ return `<section><h2>Signature demandeur</h2>${state.signature?`<img class="sig" src="${state.signature}" alt="Signature demandeur">`:'<p>Non signée.</p>'}</section>`; }
-  function summaryText(){ const p=state.profile||{}; const t=totals(); return [`Portail technicien SAV Kaufler`, `Technicien : ${(p.prenom||'')+' '+(p.nom||'')}`, `Semaine : ${p.semaine||'—'} (${p.periodeDu||'—'} → ${p.periodeAu||'—'})`, `Total heures : ${hoursFmt(t.hours)}`, `Total frais TTC : ${euro(t.expenses)}`, `Demandes de congé : ${t.leaves}`, '', p.message||'', '', 'Fichiers à joindre : récapitulatif HTML et données JSON. Pour le PDF, utiliser le bouton PDF / imprimer puis Enregistrer en PDF.'].join('\n'); }
+  function summaryText(){ const p=state.profile||{}; const t=totals(); return [`Portail technicien SAV Kaufler`, `Technicien : ${p.technicien || ((p.prenom||'')+' '+(p.nom||''))}`, `Semaine : ${p.semaine||'—'} (${p.periodeDu||'—'} → ${p.periodeAu||'—'})`, `Total heures : ${hoursFmt(t.hours)}`, `Total frais TTC : ${euro(t.expenses)}`, `Demandes de congé : ${t.leaves}`, '', p.message||'', '', 'Fichiers à joindre : récapitulatif HTML et données JSON. Pour le PDF, utiliser le bouton PDF / imprimer puis Enregistrer en PDF.'].join('\n'); }
   function downloadBlob(blob,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000); }
   function openReport(printIt){ const w=window.open('', '_blank'); if(!w){ downloadBlob(new Blob([reportHtml()],{type:'text/html;charset=utf-8'}), filename('html')); toast('Pop-up bloquée : rapport téléchargé en HTML.', 'warn'); return; } w.document.open(); w.document.write(reportHtml()); w.document.close(); if(printIt){ setTimeout(()=>{ try{ w.focus(); w.print(); }catch(e){} },650); } }
   async function shareAll(){ collectAll(); saveNow(false); const htmlFile=new File([new Blob([reportHtml()],{type:'text/html;charset=utf-8'})], filename('html'), {type:'text/html'}); const jsonFile=new File([new Blob([JSON.stringify(exportData(),null,2)],{type:'application/json;charset=utf-8'})], filename('json'), {type:'application/json'}); const title='Kaufler - Récapitulatif technicien SAV'; const text=summaryText(); try{ if(navigator.canShare && navigator.canShare({files:[htmlFile,jsonFile]}) && navigator.share){ await navigator.share({title,text,files:[htmlFile,jsonFile]}); toast('Partage ouvert sur le téléphone.', 'ok'); return; } throw new Error('share files unavailable'); }catch(e){ downloadBlob(htmlFile, htmlFile.name); downloadBlob(jsonFile, jsonFile.name); const to=(state.profile.mailTo||'').trim(); const body=text+'\n\nLes fichiers ont été téléchargés. Merci de les joindre manuellement si le mobile ne les ajoute pas automatiquement.'; $('mailBody').value=body; $('btnOpenMail').onclick=()=>{ location.href=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`; }; if($('fallbackDialog').showModal) $('fallbackDialog').showModal(); else location.href=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`; } }
