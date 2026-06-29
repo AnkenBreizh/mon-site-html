@@ -1,4 +1,4 @@
-const CACHE_NAME = "kaufler-sav-pwa-v1-5-no-footer-save-in-page";
+const CACHE_NAME = "kaufler-sav-pwa-v1-6-save-per-fiche";
 
 const APP_SHELL = [
   "./",

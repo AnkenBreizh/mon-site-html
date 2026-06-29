@@ -42,7 +42,7 @@
     input,select,textarea{width:100%;border:1px solid var(--line);background:var(--field);color:var(--ink);border-radius:15px;padding:13px 13px;outline:none;min-height:48px}textarea{min-height:92px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:rgba(225,38,47,.48);box-shadow:0 0 0 4px rgba(225,38,47,.10);background:#fff}
     .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}@media(max-width:560px){.actions{grid-template-columns:1fr}}
     .btn{border:0;border-radius:16px;min-height:50px;padding:13px 14px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none}.btn.primary{background:linear-gradient(180deg,var(--kx-red),var(--kx-red-700));color:#fff}.btn.blue{background:linear-gradient(180deg,#174c8a,#103b70);color:#fff}.btn.dark{background:#071d36;color:#fff}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.warn{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}.btn.danger{background:#fff1f2;color:#be123c;border:1px solid #fecdd3}.btn.mini{min-height:38px;padding:8px 10px;border-radius:12px;font-size:13px}.btn:active{transform:translateY(1px)}.btn[disabled]{opacity:.55;cursor:not-allowed}
-    .tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;border:1px solid var(--line);background:#fffefa;color:#334155;border-radius:999px;padding:10px 13px;font-weight:900}.tab-btn.active{background:#071d36;color:#fff;border-color:#071d36}.page-save{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 12px;padding:12px 13px;border:1px solid var(--line);border-radius:18px;background:rgba(255,254,250,.90);box-shadow:0 6px 20px rgba(17,24,39,.06)}.page-save span{color:var(--muted);font-size:13px}.page-save .btn{min-height:42px}.page-save strong{color:var(--ink)}@media(max-width:560px){.page-save{align-items:stretch;flex-direction:column}.page-save .btn{width:100%}}
+    .tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab-btn{white-space:nowrap;border:1px solid var(--line);background:#fffefa;color:#334155;border-radius:999px;padding:10px 13px;font-weight:900}.tab-btn.active{background:#071d36;color:#fff;border-color:#071d36}.page-save{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 12px;padding:12px 13px;border:1px solid var(--line);border-radius:18px;background:rgba(255,254,250,.90);box-shadow:0 6px 20px rgba(17,24,39,.06)}.page-save span{color:var(--muted);font-size:13px}.page-save .btn{min-height:42px}.page-save strong{color:var(--ink)}@media(max-width:560px){.page-save{align-items:stretch;flex-direction:column}.page-save .btn{width:100%}}.row-save{margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}.row-save .btn{width:100%;min-height:48px}
     .tab-panel{display:none}.tab-panel.active{display:block}.row-card{border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 6px 22px rgba(17,24,39,.06);padding:12px;margin:12px 0}.row-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:11px}.row-index{display:grid;place-items:center;width:35px;height:35px;border-radius:12px;background:linear-gradient(180deg,var(--kx-red),var(--kx-red-700));color:#fff;font-weight:950;min-width:35px}.row-title{flex:1}.row-title strong{display:block}.row-title small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.empty-state{border:1px dashed rgba(33,40,54,.3);border-radius:18px;background:#fffefa;padding:16px;color:var(--muted);text-align:center}.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}.kpi{border:1px solid var(--line);border-radius:18px;background:#fffefa;padding:12px}.kpi span{display:block;color:var(--muted);font-size:12px}.kpi strong{font-size:22px}.selected-tech{border:1px solid #abefc6;background:#ecfdf3;color:#067647;border-radius:18px;padding:13px;margin-bottom:11px}.selected-tech b{display:block;color:#065f46;font-size:18px}.selected-tech small{display:block;margin-top:3px;color:#067647}.total-line{display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid var(--line);margin-top:10px;padding-top:12px;font-weight:950}.signature-wrap{border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden}.signature-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;background:#f8fafc;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}canvas#signature{display:block;width:100%;height:220px;touch-action:auto;background:linear-gradient(#fff,#fff),repeating-linear-gradient(0deg,transparent,transparent 35px,rgba(15,23,42,.04) 36px);cursor:default;opacity:.72}.signature-wrap.signing canvas#signature{touch-action:none;cursor:crosshair;opacity:1;box-shadow:inset 0 0 0 3px rgba(225,38,47,.18)}.signature-status{font-size:12px;color:var(--muted);padding:8px 12px;background:#fffefa;border-top:1px solid var(--line)}.signature-wrap.signing .signature-status{color:#9a3412;background:#fff7ed}
     .bottom-bar{position:fixed;z-index:50;left:0;right:0;bottom:0;padding:10px 12px calc(10px + var(--safe));background:rgba(248,250,252,.90);border-top:1px solid rgba(33,40,54,.12);backdrop-filter:blur(16px)}.bottom-inner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.bottom-inner .btn{min-height:54px}.bottom-extra{display:inline-flex!important}
 
@@ -113,10 +113,6 @@
       <button class="tab-btn" data-tab="export" type="button">Export</button>
     </div>
 
-    <div class="page-save no-print">
-      <span><strong>Enregistrement</strong><br>Le brouillon est sauvegardé automatiquement sur ce téléphone. Le bouton ci-dessous force l’enregistrement.</span>
-      <button class="btn primary" id="saveDraftPage" type="button">Enregistrer</button>
-    </div>
 
     <datalist id="clientsList"></datalist>
     <datalist id="affairesList"></datalist>
@@ -421,8 +417,10 @@
         <label class="field"><div class="label-row"><span>N° affaire</span><span class="hint">liste + saisie libre</span></div><input data-h="affaire" list="affairesList" value="${safe(h.affaire)}" placeholder="Ex : 240123"></label>
         <label class="field"><div class="label-row"><span>Heures</span></div><input data-h="hours" inputmode="decimal" value="${safe(h.hours)}" placeholder="Ex : 7,5"></label>
         <label class="field"><div class="label-row"><span>Commentaire</span></div><input data-h="comment" value="${safe(h.comment)}" placeholder="Précision éventuelle"></label>
-      </div></article>`).join('');
-    qsa('#hoursList [data-id]').forEach(card=>{ const id=card.dataset.id; qsa('[data-h]',card).forEach(el=>el.addEventListener('input',()=>{ const h=state.hours.find(x=>x.id===id); if(h){ h[el.dataset.h]=el.value; scheduleSave(); updateKpis(); }})); card.querySelector('[data-del="hour"]').onclick=()=>{ state.hours=state.hours.filter(x=>x.id!==id); renderHours(); saveNow(false); }; }); updateKpis(); }
+      </div>
+      <div class="row-save no-print"><button class="btn primary" data-save-card="hour" type="button">Enregistrer cette fiche</button></div>
+    </article>`).join('');
+    qsa('#hoursList [data-id]').forEach(card=>{ const id=card.dataset.id; qsa('[data-h]',card).forEach(el=>el.addEventListener('input',()=>{ const h=state.hours.find(x=>x.id===id); if(h){ h[el.dataset.h]=el.value; scheduleSave(); updateKpis(); }})); card.querySelector('[data-del="hour"]').onclick=()=>{ state.hours=state.hours.filter(x=>x.id!==id); renderHours(); saveNow(false); }; const saveBtn=card.querySelector('[data-save-card="hour"]'); if(saveBtn) saveBtn.onclick=()=>{ collectAll(); saveNow(true); }; }); updateKpis(); }
   function collectExpenses(){ qsa('#expensesList [data-id]').forEach(card=>{ const id=card.dataset.id; const e=state.expenses.find(x=>x.id===id); if(!e)return; qsa('[data-e]',card).forEach(el=>e[el.dataset.e]=el.value); }); }
   function renderExpenses(){ const root=$('expensesList'); if(!state.expenses.length){ root.innerHTML='<div class="empty-state">Aucune dépense. Clique sur “+ Frais”.</div>'; updateKpis(); return; } root.innerHTML=state.expenses.map((e,i)=>`
     <article class="row-card" data-id="${safe(e.id)}"><div class="row-head"><span class="row-index">${i+1}</span><div class="row-title"><strong>${safe(e.type||'Frais')}</strong><small>${safe(e.date||'')} · ${euro(e.ttc)}</small></div><button class="btn mini danger" data-del="expense" type="button">Supprimer</button></div>
@@ -435,8 +433,9 @@
         <label class="field"><div class="label-row"><span>TVA</span></div><input data-e="tva" inputmode="decimal" value="${safe(e.tva)}" placeholder="Ex : 1,72"></label>
       </div>
       <label class="field" style="margin-top:11px"><div class="label-row"><span>Observation</span></div><textarea data-e="comment" placeholder="Motif, repas, invité, trajet…">${safe(e.comment)}</textarea></label>
+      <div class="row-save no-print"><button class="btn primary" data-save-card="expense" type="button">Enregistrer cette fiche</button></div>
     </article>`).join('');
-    qsa('#expensesList [data-id]').forEach(card=>{ const id=card.dataset.id; qsa('[data-e]',card).forEach(el=>el.addEventListener('input',()=>{ const e=state.expenses.find(x=>x.id===id); if(e){ e[el.dataset.e]=el.value; scheduleSave(); updateKpis(); }})); card.querySelector('[data-del="expense"]').onclick=()=>{ state.expenses=state.expenses.filter(x=>x.id!==id); renderExpenses(); saveNow(false); }; }); updateKpis(); }
+    qsa('#expensesList [data-id]').forEach(card=>{ const id=card.dataset.id; qsa('[data-e]',card).forEach(el=>el.addEventListener('input',()=>{ const e=state.expenses.find(x=>x.id===id); if(e){ e[el.dataset.e]=el.value; scheduleSave(); updateKpis(); }})); card.querySelector('[data-del="expense"]').onclick=()=>{ state.expenses=state.expenses.filter(x=>x.id!==id); renderExpenses(); saveNow(false); }; const saveBtn=card.querySelector('[data-save-card="expense"]'); if(saveBtn) saveBtn.onclick=()=>{ collectAll(); saveNow(true); }; }); updateKpis(); }
   function collectLeaves(){ qsa('#leavesList [data-id]').forEach(card=>{ const id=card.dataset.id; const l=state.leaves.find(x=>x.id===id); if(!l)return; qsa('[data-l]',card).forEach(el=>l[el.dataset.l]=el.value); autoCalculateLeaveDays(l); }); state.leaves.forEach(autoCalculateLeaveDays); }
   function renderLeaves(){
     const root=$('leavesList');
@@ -454,6 +453,7 @@
         <label class="field"><div class="label-row"><span>Solde CP</span></div><input data-l="soldeCp" inputmode="decimal" value="${safe(l.soldeCp)}"></label>
       </div>
       <label class="field" style="margin-top:11px"><div class="label-row"><span>Commentaire</span></div><textarea data-l="comment" placeholder="Formation, précision, autre…">${safe(l.comment)}</textarea></label>
+      <div class="row-save no-print"><button class="btn primary" data-save-card="leave" type="button">Enregistrer cette fiche</button></div>
     </article>`).join('');
     qsa('#leavesList [data-id]').forEach(card=>{
       const id=card.dataset.id;
@@ -473,6 +473,8 @@
         }
       }));
       card.querySelector('[data-del="leave"]').onclick=()=>{ state.leaves=state.leaves.filter(x=>x.id!==id); renderLeaves(); saveNow(false); };
+      const saveBtn=card.querySelector('[data-save-card="leave"]');
+      if(saveBtn) saveBtn.onclick=()=>{ collectAll(); saveNow(true); };
     });
     updateKpis();
   }
@@ -511,7 +513,7 @@
     setTimeout(resize,60);
   }
 
-  function exportData(){ collectAll(); return {version:'v1.7-leave-workdays-signature-lock',exportedAt:new Date().toISOString(),profile:state.profile,refs:state.refs,hours:state.hours,expenses:state.expenses,leaves:state.leaves,signature:state.signature}; }
+  function exportData(){ collectAll(); return {version:'v1.6-save-per-fiche',exportedAt:new Date().toISOString(),profile:state.profile,refs:state.refs,hours:state.hours,expenses:state.expenses,leaves:state.leaves,signature:state.signature}; }
   function filename(ext, kind){ const p=state.profile||{}; const name=[p.nom,p.prenom].filter(Boolean).join('-') || (p.technicien||'technicien'); const sem=p.semaine || isoWeek(new Date()); const stamp=new Date().toISOString().slice(0,10); const part=kind?'-'+kind:''; return `kaufler-${name}-S${sem}-${stamp}${part}.${ext}`.replace(/[^a-zA-Z0-9_.-]+/g,'-'); }
   function dayLabel(date){ if(!date) return '—'; const d=new Date(date+'T00:00:00'); return `${DAY_NAMES[d.getDay()]} ${d.toLocaleDateString('fr-FR')}`; }
   function dailyTotals(){ const map={}; state.hours.forEach(h=>{ if(!h.date) return; map[h.date]=(map[h.date]||0)+hoursValue(h.hours); }); return Object.entries(map).sort(([a],[b])=>a.localeCompare(b)); }
@@ -568,7 +570,7 @@
 <script>
   // PWA — installation mobile, hors ligne et alerte de mise à jour
   (function(){
-    const APP_VERSION = "1.4.0";
+    const APP_VERSION = "1.6.0";
     let updateRegistration = null;
     let refreshing = false;
 

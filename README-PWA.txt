@@ -1,6 +1,4 @@
-Version V1.5 : suppression du footer fixe et ajout du bouton Enregistrer directement dans la page.
-
-KAUFLER — PORTAIL SAV PWA V1.4
+KAUFLER — PORTAIL SAV PWA V1.6
 
 Contenu à déposer à la racine du dépôt GitHub Pages :
 - index.html
@@ -8,6 +6,17 @@ Contenu à déposer à la racine du dépôt GitHub Pages :
 - sw.js
 - icons/icon-192.png
 - icons/icon-512.png
+
+V1.6 :
+- suppression du bloc d’enregistrement en haut de page ;
+- ajout du bouton “Enregistrer cette fiche” en bas de chaque fiche Heures, Frais et Congés ;
+- conservation de l’enregistrement automatique en arrière-plan ;
+- cache PWA mis à jour pour déclencher la bannière “Mise à jour disponible”.
+
+Rappel V1.4/V1.5 :
+- calcul automatique des jours ouvrés dans les demandes de congé, du lundi au vendredi, hors jours fériés ;
+- bouton Signer pour activer/désactiver la zone tactile de signature ;
+- footer fixe supprimé.
 
 Installation mobile :
 - Android / Chrome : menu ⋮ > Installer l’application
@@ -19,8 +28,3 @@ Si une version plus récente est détectée, une bannière “Mise à jour dispo
 Le technicien appuie sur “Mettre à jour” pour charger la nouvelle version.
 
 Important : les données saisies localement restent dans le navigateur/PWA. Le JSON de sauvegarde reste indispensable pour archivage.
-
-
-V1.4 :
-- calcul automatique des jours ouvrés dans les demandes de congé, du lundi au vendredi, hors jours fériés ;
-- bouton Signer pour activer/désactiver la zone tactile de signature.
