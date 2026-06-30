@@ -1,4 +1,4 @@
-const CACHE_NAME = "kaufler-sav-pwa-v1-10-dashboard-save-list";
+const CACHE_NAME = "kaufler-sav-pwa-v1-11-stable-list-add";
 
 const APP_SHELL = [
   "./",
