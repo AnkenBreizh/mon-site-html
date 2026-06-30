@@ -28,3 +28,6 @@ Si une version plus récente est détectée, une bannière “Mise à jour dispo
 Le technicien appuie sur “Mettre à jour” pour charger la nouvelle version.
 
 Important : les données saisies localement restent dans le navigateur/PWA. Le JSON de sauvegarde reste indispensable pour archivage.
+
+
+Version V1.7 : repositionnement premium des cartes et indicateurs, logo inchangé.
