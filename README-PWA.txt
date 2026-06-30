@@ -1,29 +1,33 @@
-{
-  "name": "Kaufler — Portail technicien SAV",
-  "short_name": "Kaufler SAV",
-  "description": "Saisie mobile des heures, frais et demandes de congés SAV.",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#efe9df",
-  "theme_color": "#071d36",
-  "orientation": "portrait",
-  "categories": [
-    "business",
-    "productivity"
-  ],
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
+KAUFLER — PORTAIL SAV PWA V1.6
+
+Contenu à déposer à la racine du dépôt GitHub Pages :
+- index.html
+- manifest.webmanifest
+- sw.js
+- icons/icon-192.png
+- icons/icon-512.png
+
+V1.6 :
+- suppression du bloc d’enregistrement en haut de page ;
+- ajout du bouton “Enregistrer cette fiche” en bas de chaque fiche Heures, Frais et Congés ;
+- conservation de l’enregistrement automatique en arrière-plan ;
+- cache PWA mis à jour pour déclencher la bannière “Mise à jour disponible”.
+
+Rappel V1.4/V1.5 :
+- calcul automatique des jours ouvrés dans les demandes de congé, du lundi au vendredi, hors jours fériés ;
+- bouton Signer pour activer/désactiver la zone tactile de signature ;
+- footer fixe supprimé.
+
+Installation mobile :
+- Android / Chrome : menu ⋮ > Installer l’application
+- iPhone / Safari : Partager > Sur l’écran d’accueil
+
+Mise à jour techniciens :
+Quand une nouvelle version est publiée sur GitHub Pages, l’application vérifie au lancement et quand elle repasse au premier plan.
+Si une version plus récente est détectée, une bannière “Mise à jour disponible” apparaît.
+Le technicien appuie sur “Mettre à jour” pour charger la nouvelle version.
+
+Important : les données saisies localement restent dans le navigateur/PWA. Le JSON de sauvegarde reste indispensable pour archivage.
+
+
+Version V1.7 : repositionnement premium des cartes et indicateurs, logo inchangé.
